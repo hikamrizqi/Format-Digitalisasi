@@ -1,240 +1,246 @@
-# PRODUCT REQUIREMENTS DOCUMENT (PRD)
-## Aplikasi Web Generator & Digitalisasi Dokumen KAK (Kerangka Acuan Kerja)
-**Kementerian Koordinator Bidang Pembangunan Manusia dan Kebudayaan (Kemenko PMK)**
+# PRD: KAK Digitalizer (Aplikasi Web Generator Dokumen Kerangka Acuan Kerja)
+> **Format Template:** Notion PRD from Raw Notes 2.0  
+> **Instansi:** Kementerian Koordinator Bidang Pembangunan Manusia dan Kebudayaan (Kemenko PMK)  
+> **Status:** Approved / In Development  
+> **Owner / Author:** Tim Magang Digitalisasi Kemenko PMK  
+> **Target Release:** Q4 2026 / Anggaran 2027  
+> **File Acuan Template:** `Copy of Format Digitalisasi KAK.docx`  
 
 ---
 
-## 1. INFORMASI DOKUMEN & RINGKASAN EKSEKUTIF
+## 1. Context & Problem Statement
 
-| Atribut | Keterangan |
-| :--- | :--- |
-| **Nama Produk** | **KAK Digitalizer** (*Sistem Digitalisasi & Generator Dokumen Kerangka Acuan Kerja*) |
-| **Versi Dokumen** | Versi 1.0 |
-| **Tanggal Penyusunan** | 22 September 2026 |
-| **File Acuan Template** | `Copy of Format Digitalisasi KAK.docx` |
-| **Status Dokumen** | Disetujui untuk Implementasi (*Ready for Development*) |
+### 1.1 What Problem Are We Solving?
+Dokumen Kerangka Acuan Kerja (KAK / TOR) merupakan dokumen legal-administratif wajib dalam penyusunan Rencana Kerja dan Anggaran Kementerian/Lembaga (RKA-K/L) di Kemenko PMK. Saat ini, proses penyusunan KAK masih dilakukan secara **manual** dengan cara mengisi template dokumen Microsoft Word (`Copy of Format Digitalisasi KAK.docx`). 
 
-### 1.1 Ringkasan Eksekutif
-Dokumen KAK (*Kerangka Acuan Kerja / Term of Reference*) merupakan instrumen perencanaan anggaran dan kegiatan tahunan yang vital di lingkungan Kemenko PMK. Saat ini, penyusunan KAK masih dilakukan secara manual dengan mengisi dokumen Word mentah yang memuat ratusan placeholder kosong (ditandai dengan titik-titik `……` dan blok warna **kuning / yellow highlight**). 
+Dokumen template master tersebut memuat **320+ paragraf dan tabel**, serta **lebih dari 100 blok placeholder bertanda titik-titik `……` dengan sorotan kuning (*yellow highlight*)**.
 
-Proses manual ini memiliki kelemahan:
-1. Sering terlewatnya placeholder bertanda kuning.
-2. Rusaknya tata letak (*layout/styling*) akibat perbedaan gaya pengetikan staf.
-3. Lambatnya proses kompilasi narasi dari dasar hukum, sasaran RPJMN, hingga matriks anggaran.
+**Dampak Masalah Saat Ini:**
+* **Human Error Tinggi:** Banyak placeholder titik-titik atau sorotan kuning yang terlewat (tidak terisi) sebelum diserahkan ke bagian perencanaan/keuangan.
+* **Kerusakan Format Dokumen:** Pengeditan manual antar staf dengan versi Word berbeda sering merusak margin, perataan tabel, dan penomoran hierarki resmi kementerian.
+* **Waktu Pengerjaan Lambat:** Staf perencana menghabiskan waktu berhari-hari hanya untuk mencocokkan nomor Perpres SOTK, sasaran RPJMN, indikator Reformasi Birokrasi (RB), matriks Gender Analysis Pathway (GAP), dan tabel jadwal bulanan Jan–Des.
 
-**Solusi:** Membangun aplikasi web modern berbasis *form-wizard* cerdas yang membaca struktur template `Copy of Format Digitalisasi KAK.docx`, menyediakan formulir input data terpandu (*guided form*), dan secara otomatis mengompilasi serta menghasilkan (*export*) file DOCX resmi yang rapi, di mana seluruh tanda kuning/placeholder telah digantikan dengan nilai input pengguna dan sorotan (*highlight*) kuning dihapus secara bersih.
+### 1.2 Why Now?
+Memasuki siklus perencanaan Anggaran 2027 dan implementasi RPJMN 2025–2029, standardisasi dokumen perencanaan menjadi mandat penting reformasi birokrasi internal Kemenko PMK. Digitalisasi formulir KAK menjadi kebutuhan mendesak untuk mempercepat proses persetujuan program kerja lintas Asisten Deputi.
 
----
-
-## 2. LATAR BELAKANG & ANALISIS MASALAH
-
-### 2.1 Kondisi Saat Ini (Current State)
-* Template KAK Kemenko PMK memiliki struktur kompleks (terdiri dari 320+ paragraf dan tabel, serta lebih dari 100 blok placeholder bertanda sorot kuning / `<w:highlight w:val="yellow"/>`).
-* Placeholder mencakup:
-  * Teks titik-titik `……`
-  * Angka urutan `(1)`, `(2)`, `(3)`, dst.
-  * Teks instruksi panduan (contoh: *"Cantumkan Undang-undang, PP, Perpres...", "Data terbaru terkait program..."*).
-  * Variabel dinamis pada tabel tahapan kegiatan, matriks pelaksanaan bulanan (Jan–Des), dan Rincian Anggaran Biaya (RAB).
-* Pengisian manual rentan menimbulkan inkonsistensi nama Deputi/Asdep, nomor urut peraturan, serta keterlambatan revisi.
-
-### 2.2 Kondisi yang Diharapkan (Future State)
-* Pengguna cukup membuka aplikasi web, mengisi formulir terstruktur langkah demi langkah (*step-by-step wizard*).
-* Sistem menyediakan validasi otomatis sehingga tidak ada *field* wajib yang kosong.
-* Tombol **"Generate & Unduh DOCX"** menghasilkan berkas Microsoft Word dengan format, margin, jenis huruf (*Times New Roman / Calibri / Arial*), ukuran font, spasi, penomoran hierarki, dan tabel yang **100% presisi identik** dengan dokumen master, tanpa sisa *highlight* kuning.
-
----
-
-## 3. TUJUAN PRODUK & METRIK KEBERHASILAN (KPI)
-
-### 3.1 Tujuan Utama
-1. Menghilangkan kesalahan manusia (*human error*) berupa placeholder yang tertinggal atau lupa diisi.
-2. Mempercepat waktu penyusunan dokumen KAK dari hitungan hari/jam menjadi beberapa menit.
-3. Menjamin standardisasi format dokumen di seluruh Asisten Deputi dan Deputi Kemenko PMK.
-
-### 3.2 Metrik Keberhasilan (KPI)
-* **0% Sisa Placeholder Kuning:** Tidak ada satupun *run* teks bertanda sorot kuning pada file DOCX yang diunduh.
-* **100% Format Integrity:** Tidak ada tabel yang terpotong, margin yang bergeser, atau perubahan *style* dokumen asli.
-* **Waktu Pengisian Lebih Singkat:** Mengurangi waktu input dan editing KAK hingga > 60%.
-* **Zero Data Loss:** Pengguna dapat menyimpan draf sementara (*Save Draft*) dan melanjutkan pengerjaan kapan saja tanpa kehilangan data.
-
----
-
-## 4. TARGET PENGGUNA & PERSONA
-
-| Persona | Peran | Kebutuhan Utama |
+### 1.3 Target Users & Jobs-To-Be-Done (JTBD)
+| Persona | Jobs-to-be-Done (JTBD) | Pain Points |
 | :--- | :--- | :--- |
-| **Staf Perencana / Konseptor KAK (Asdep)** | Pengisi data teknis kegiatan, narasi RPJMN, indikator kinerja, tahapan rapat, dan RAB. | Formulir yang intuitif, panduan penulisan per *field*, fitur simpan draf, dan ekspor langsung ke format `.docx`. |
-| **Penyelia / Pejabat Pembuat Komitmen (PPK)** | Menelaah kesesuaian output dengan Renstra dan pagu anggaran. | Pratinjau (*preview*) ringkasan data sebelum dokumen final diunduh dan dicetak. |
-| **Administrator Sistem** | Memperbarui template DOCX master jika terdapat perubahan regulasi atau format resmi kementerian. | Kemudahan mengunggah template master baru tanpa perlu mengubah kode sumber aplikasi (*template upload capability*). |
+| **Staf Konseptor / Perencana Asdep** | *"Ketika menyusun KAK tahunan, saya ingin form terpandu yang otomatis mengisi nomor regulasi dan narasi program, sehingga dokumen selesai cepat tanpa ada tanda kuning yang terlewat."* | Lupa letak titik-titik kuning, format tabel berantakan saat dicopy-paste. |
+| **Pejabat Pembuat Komitmen (PPK) / Asisten Deputi** | *"Ketika meninjau draf KAK, saya ingin memastikan output, jadwal, dan pagu anggaran valid sebelum menandatangani."* | Harus mengecek lembar demi lembar untuk memastikan tidak ada draf yang bolong. |
+| **Biro Perencanaan Kemenko PMK** | *"Ketika menerima kumpulan KAK dari seluruh unit kerja, saya ingin format dokumen seragam dan sesuai standar SOTK terbaru."* | Format KAK berbeda-beda antar unit kerja eselon II. |
 
 ---
 
-## 5. ALUR PENGGUNA (USER JOURNEY)
+## 2. Goals & Non-Goals
 
+### 2.1 Goals (In-Scope)
+* **100% Zero Remaining Yellow Highlights:** Menghasilkan dokumen Word (`.docx`) di mana seluruh teks placeholder kuning terisi dan seluruh tag `<w:highlight w:val="yellow"/>` dihapus bersih.
+* **100% Layout Integrity Preservation:** Menjamin struktur tabel, margin, font (Times New Roman / Calibri / Arial), dan spasi dokumen asli tidak bergeser.
+* **Zero-Setup & 100% Client-Side:** Aplikasi dapat berjalan langsung di laptop dinas pegawai hanya dengan membuka `index.html` (didukung Base64 fallback untuk eksekusi *double-click* offline tanpa perlu install server Node.js/Python).
+* **Zero Data Loss:** Fitur *Auto-Save* ke `localStorage` dan *Export/Import JSON Draft* untuk portabilitas draf antar pegawai.
+* **Penyelesaian Cepat:** Mengurangi durasi penyusunan draf KAK dari 2–3 hari menjadi kurang dari 15 menit.
+
+### 2.2 Non-Goals (Out of Scope for v1.0)
+* **Sistem Database Multi-User Terpusat:** Versi 1.0 tidak menggunakan database server (MySQL/PostgreSQL) agar tidak memerlukan pengadaan server atau izin Pusdatin.
+* **Tanda Tangan Elektronik (TTE / BSrE):** Penandatanganan dokumen tetap dilakukan melalui alur persuratan resmi kementerian setelah berkas Word diunduh.
+* **Konversi Otomatis ke PDF:** Konversi ke PDF diserahkan ke fitur bawaan Microsoft Word (*Save As PDF*) untuk memastikan validitas rendering layout resmi.
+
+---
+
+## 3. User Stories & End-to-End User Flow
+
+### 3.1 User Stories
+* **US-1:** Sebagai staf perencana, saya ingin dipandu langkah demi langkah (*form wizard*) agar tidak bingung mengisi lebih dari 100 variabel KAK.
+* **US-2:** Sebagai staf perencana, saya ingin tombol *"Muat Contoh Data KAK 2027"* agar dapat melihat contoh pengisian resmi dan menghemat waktu entri data.
+* **US-3:** Sebagai staf perencana, saya ingin progres pengisian formulir ditampilkan secara *real-time* agar saya tahu bagian mana yang belum lengkap.
+* **US-4:** Sebagai staf yang bekerja secara mobile, saya ingin bisa menyimpan draf ke file `.json` dan melanjutkannya di komputer lain.
+* **US-5:** Sebagai pengguna, ketika saya menekan tombol *"Unduh DOCX"*, saya ingin langsung mendapatkan file Microsoft Word resmi yang siap dicetak tanpa ada teks berwarna kuning.
+
+### 3.2 User Flow Diagram
 ```mermaid
-flowchart TD
-    A[Mulai: Buka Web App] --> B[Pilih Template Master DOCX]
-    B --> C[Langkah 1: Identitas KAK & Satker]
-    C --> D[Langkah 2: Dasar Hukum & Tugas Fungsi]
-    D --> E[Langkah 3: Narasi RPJMN, Isu Strategis & Kebijakan]
-    E --> F[Langkah 4: Reformasi Birokrasi RB & Gender GAP]
-    F --> G[Langkah 5: Penerima Manfaat & Tahapan Pelaksanaan]
-    G --> H[Langkah 6: Matriks Waktu Jan-Des & Anggaran]
-    H --> I[Langkah 7: Lembar Pengesahan / Tanda Tangan]
-    I --> J{Validasi Kelengkapan Field}
-    J -- Masih Ada Field Wajib Kosong --> K[Tampilkan Peringatan & Sorot Field Kosong]
-    K --> I
-    J -- Valid & Lengkap --> L[Pratinjau Data Ringkasan]
-    L --> M[Klik: Generate Dokumen DOCX]
-    M --> N[Mesin Pengganti DOCX: Ganti Placeholder & Hapus Yellow Highlight]
-    N --> O[Unduh File: KAK_[Nama_Asdep]_[Tahun].docx]
-    O --> P[Selesai]
+sequenceDiagram
+    autonumber
+    actor User as Staf Perencana
+    participant UI as Form Wizard (index.html)
+    participant Store as StorageService (localStorage)
+    participant Engine as DocxService (JSZip & DOM)
+    
+    User->>UI: Buka aplikasi (Double-click index.html)
+    UI->>Store: Cek & pulihkan draf tersimpan
+    UI-->>User: Tampilkan formulir terstruktur (Langkah 1 s.d. 7)
+    User->>UI: Input data / Klik "Muat Contoh Data KAK 2027"
+    UI->>Store: Auto-save draf secara real-time
+    User->>UI: Klik "Lanjut" hingga Langkah 7 (Pengesahan)
+    User->>UI: Klik "Generate & Unduh Dokumen (.docx)"
+    UI->>Engine: Kirim formData ke DocxService
+    Engine->>Engine: Buka template master, terapkan DOCX_MAPPING_RULES
+    Engine->>Engine: Ganti teks & bersihkan 100% yellow highlight
+    Engine->>Engine: Kompresi ulang ZIP menjadi .docx
+    Engine-->>User: Otomatis download KAK_[Nama_Asdep]_[Tahun].docx
 ```
 
 ---
 
-## 6. SPESIFIKASI KEBUTUHAN FUNGSIONAL (FUNCTIONAL REQUIREMENTS)
+## 4. Functional Requirements & Priorities (MoSCoW)
 
-### FR-1: Modul Template Ingestion & Placeholder Mapping
-* **FR-1.1:** Sistem harus memuat template bawaan (`Copy of Format Digitalisasi KAK.docx`) secara otomatis sebagai basis pembentukan dokumen.
-* **FR-1.2:** Sistem harus menyediakan opsi untuk mengunggah template `.docx` baru jika di masa depan ada pembaruan format dari Biro Perencanaan.
-* **FR-1.3:** Sistem memetakan seluruh elemen XML OpenXML (`w:document.xml`) yang memiliki tag `<w:highlight w:val="yellow"/>` menjadi kunci variabel (*variable keys*) yang terhubung ke formulir input.
+### 4.1 Must Have (P0 - Critical Core)
+| ID | Kebutuhan Fungsional | Kriteria Keberterimaan (*Acceptance Criteria*) |
+| :---: | :--- | :--- |
+| **FR-01** | **Multi-Step Form Wizard (7 Tahap)** | Formulir dibagi menjadi: 1. Cover & Satker, 2. Dasar Hukum & SOTK, 3. RPJMN & Rekomendasi, 4. RB & Gender (GAP), 5. Penerima Manfaat & Tahapan, 6. Jadwal & RAB, 7. Pengesahan. Navigasi tab responsif. |
+| **FR-02** | **OpenXML Replacement Engine** | Membaca `word/document.xml`, mencocokkan paragraf dengan aturan domain (`DOCX_MAPPING_RULES`), dan mengganti teks placeholder dengan nilai form. |
+| **FR-03** | **Pembersihan Highlight Kuning Total** | Menghapus seluruh tag `<w:highlight w:val="yellow"/>` di seluruh dokumen Word hasil ekspor. |
+| **FR-04** | **Penyimpanan Draf Otomatis (*Auto-Save*)** | Setiap kali pengguna mengetik, isian tersimpan otomatis ke `localStorage` (debounced 500 ms) sehingga tidak hilang saat tab browser tertutup. |
+| **FR-05** | **Ekspor Langsung Berkas DOCX** | Menghasilkan file biner `.docx` valid yang langsung terunduh dengan penamaan format `KAK_[Nama_Asdep]_[Tahun].docx`. |
+| **FR-06** | **Zero-Setup Offline Capability** | Template master tersemat (*embedded base64*) di `template-data.js` sehingga aplikasi dapat langsung berjalan via `file:///` tanpa server lokal. |
 
-### FR-2: Modul Formulir Terpandu (*Multi-Step Form Wizard*)
-Formulir dibagi menjadi 7 tab/tahapan logis agar pengguna tidak kewalahan (*avoid cognitive overload*):
+### 4.2 Should Have (P1 - Important Enhancements)
+| ID | Kebutuhan Fungsional | Kriteria Keberterimaan (*Acceptance Criteria*) |
+| :---: | :--- | :--- |
+| **FR-07** | **Dynamic Repeater Rows** | Pengguna dapat menambah dan menghapus baris dinamis pada daftar Dasar Hukum, Lembaga Penerima, dan Kelompok Masyarakat. |
+| **FR-08** | **Matriks Jadwal Bulanan Interaktif** | Tabel checkbox 4 tahapan kegiatan x 12 bulan (Januari–Desember) yang otomatis terpetakan ke jadwal KAK. |
+| **FR-09** | **Ekspor & Impor Draf JSON Portabel** | Pengguna dapat mengunduh draf isian ke berkas `.json` dan mengunggah kembali berkas draf tersebut untuk pengisian instan di perangkat lain. |
+| **FR-10** | **Indikator Progres Kelengkapan Data** | Progress bar yang menampilkan persentase kelengkapan *required fields* secara dinamis. |
+| **FR-11** | **Preset Contoh Resmi (One-Click Demo)** | Tombol *"✨ Muat Contoh Data KAK 2027"* yang mengisi seluruh formulir dengan data acuan Kemenko PMK yang valid. |
 
-* **Tahap 1: Cover & Identitas Dokumen**
-  * Asisten Deputi, Deputi Bidang, Tahun Anggaran.
-  * Program (036.CL), Kegiatan, Klasifikasi Rincian Output (KRO), Rincian Output (RO).
-  * Sasaran Program, Indikator Kinerja Program, Sasaran Kegiatan, Indikator RO, Volume RO, dan Satuan RO.
-* **Tahap 2: Dasar Hukum & Tugas Fungsi**
-  * Nomor dan Judul Perpres SOTK Kemenko PMK (Perpres No ... Tahun ... tentang ...).
-  * Urusan pemerintahan yang diselenggarakan.
-  * Fungsi Deputi dan fungsi Asisten Deputi.
-  * Daftar K/L di bawah koordinasi Asdep.
-  * Daftar regulasi dasar hukum (Undang-Undang, PP, Perpres, Permen).
-* **Tahap 3: Substansi RPJMN, Isu Strategis & Rekomendasi Kebijakan**
-  * Prioritas Nasional (PN), Sasaran PN, Arah Kebijakan RKP.
-  * Program & Indikator RPJMN (Lampiran III).
-  * Narasi Data Terbaru, Isu Strategis, Gap Analysis, dan Konsentrasi Kewilayahan.
-  * Output Rekomendasi Alternatif Kebijakan (Nama Rekomendasi, Tujuan, Fokus, dan Dampak yang diharapkan).
-* **Tahap 4: Reformasi Birokrasi (RB) & Pengarusutamaan Gender (GAP)**
-  * Indikator RB yang dikawal beserta catatan narasi (regulasi, capaian, isu strategis, faktor penghambat/pendorong, stakeholder).
-  * Narasi PUG/GAP: kesenjangan gender, faktor penyebab, dan bentuk intervensi.
-* **Tahap 5: Penerima Manfaat & Tahapan Pelaksanaan Kegiatan**
-  * Daftar Lembaga Eksternal & Kelompok Masyarakat penerima manfaat.
-  * Rincian Kegiatan Tahapan (Identifikasi Masalah, Sinkronisasi Koordinasi & Pengendalian/SKP, Monitoring & Evaluasi, Penyusunan Rekomendasi Kebijakan).
-  * Detail per kegiatan: Lokasi (Prov/Kab/Kota & alasan pemilihan jika di luar Jakarta), Waktu (Bulan/Tahun), Daftar Peserta, Jumlah Peserta, Kebutuhan Narasumber, dan Output yang dicapai.
-* **Tahap 6: Matriks Kurun Waktu & Anggaran (RAB)**
-  * Matriks checklist pelaksanaan bulanan (Bulan 1 s.d. 12).
-  * Total nominal anggaran yang dibutuhkan (Rp xxxxx).
-* **Tahap 7: Lembar Pengesahan**
-  * Tempat & Tanggal Dokumen (contoh: *Jakarta, 15 Januari 2027*).
-  * Nama Pejabat / Asisten Deputi.
-  * NIP Pejabat.
-
-### FR-3: Modul Repeater & Komponen Dinamis
-* **FR-3.1:** Mendukung penambahan baris dinamis (*dynamic add/remove row*) untuk daftar dasar hukum, daftar peserta rapat, dan butir-butir rekomendasi kebijakan.
-* **FR-3.2:** Mendukung format angka mata uang otomatis (Rupiah `Rp xxx.xxx.xxx`) pada kolom anggaran.
-
-### FR-4: Modul Manajemen Draf (Draft Auto-Save & Export/Import Draf)
-* **FR-4.1 Auto-save:** Data input formulir tersimpan secara otomatis ke `localStorage` peramban pengguna setiap kali terjadi perubahan input.
-* **FR-4.2 Export Draf (JSON):** Pengguna dapat mengunduh draf isian dalam format berkas `.json` agar dapat dipindahkan ke komputer lain atau dibagikan ke rekan kerja.
-* **FR-4.3 Import Draf (JSON):** Pengguna dapat mengunggah kembali file draf `.json` untuk mengisi seluruh formulir secara instan.
-* **FR-4.4 Reset Form:** Tombol pembersihan draf dengan konfirmasi dialog pencegah kehilangan data tidak sengaja.
-
-### FR-5: Modul Validasi & Pemeriksaan Kelengkapan
-* **FR-5.1:** Menampilkan indikator persentase kelengkapan pengisian dokumen (*Document Completion Progress Bar*, misal: *"85% Lengkap"*).
-* **FR-5.2:** Menampilkan daftar *checklist* field yang belum terisi sebelum proses unduh diizinkan atau memberikan opsi *"Isi Default"* untuk bagian opsional.
-
-### FR-6: Modul Mesin Penggantian DOCX (OpenXML Replacement Engine)
-* **FR-6.1:** Membuka paket arsip `.docx` dan membaca `word/document.xml`.
-* **FR-6.2:** Menelusuri seluruh *run element* (`<w:r>`) yang mengandung tanda sorot kuning (`<w:highlight w:val="yellow"/>`).
-* **FR-6.3:** Mengganti nilai teks di dalam `<w:t>` dengan data masukan pengguna sesuai ID pemetaan variabel.
-* **FR-6.4:** **Menghapus elemen `<w:highlight>`** dari *run* tersebut sehingga hasil teks di dokumen keluaran tidak lagi berwarna kuning (*clean text*).
-* **FR-6.5:** Mempertahankan seluruh format font, ukuran, penebalan (*bold*), garis miring (*italic*), perataan paragraf (*alignment*), serta struktur tabel asli tanpa pergeseran.
-* **FR-6.6:** Mengemas kembali arsip `.docx` dan menghasilkan berkas biner siap unduh melalui *Blob API*.
+### 4.3 Could Have (P2 - Nice to Have)
+| ID | Kebutuhan Fungsional | Kriteria Keberterimaan (*Acceptance Criteria*) |
+| :---: | :--- | :--- |
+| **FR-12** | **Custom Template Uploader** | Opsi bagi admin untuk mengunggah template `.docx` baru jika terdapat revisi format resmi di masa depan. |
+| **FR-13** | **Pratinjau Ringkasan Dokumen (Preview Modal)** | Tampilan modal ringkasan data sebelum tombol generate ditekan. |
 
 ---
 
-## 7. SPESIFIKASI KEBUTUHAN NON-FUNGSIONAL (NON-FUNCTIONAL REQUIREMENTS)
+## 5. Non-Functional Requirements (NFR)
 
-| Kategori | Kebutuhan & Standar Kualitas |
-| :--- | :--- |
-| **Integritas Dokumen** | Dokumen hasil *generate* harus 100% valid dan dapat dibuka sempurna di Microsoft Word 2016+, Office 365, LibreOffice, maupun Google Docs tanpa peringatan korup (*no XML corruption*). |
-| **Performa** | Proses penggantian teks dan pembuatan dokumen output DOCX di peramban harus selesai dalam waktu kurang dari **2 detik**. |
-| **Keamanan & Privasi** | Pemrosesan dokumen dapat berjalan secara **100% Client-Side** (dalam browser pengguna) tanpa mengirimkan isi dokumen sensitif kementerian ke server eksternal pihak ketiga, menjamin kerahasiaan data perencanaan Kemenko PMK. |
-| **Kompatibilitas** | Berjalan responsif dan mulus pada peramban modern (Google Chrome, Microsoft Edge, Mozilla Firefox, Safari) pada resolusi desktop/laptop (min 1366x768). |
-| **Aksesibilitas & Estetika (UI/UX)** | Antarmuka berstandar instansi pemerintah modern (palet warna Kemenko PMK: navy/biru kementerian, putih, abu-abu netral), tipografi jelas (*Inter/Plus Jakarta Sans*), indikator langkah yang komunikatif, dan responsif terhadap input pengguna. |
+| Kategori | Spesifikasi Kualitas | Standar Keberhasilan |
+| :--- | :--- | :--- |
+| **Integritas Dokumen** | Format Word Valid | Hasil ekspor dapat dibuka sempurna di Microsoft Word 2016+, Office 365, LibreOffice, dan Google Docs tanpa error XML. |
+| **Performa & Kecepatan** | Waktu Ekspor Instan | Proses pembacaan XML, penggantian teks, dan kompresi `.docx` selesai dalam **< 1,5 detik** di memori browser. |
+| **Keamanan & Kerahasiaan** | 100% Client-Side Privacy | Tidak ada data draf perencanaan anggaran kementerian yang dikirimkan ke internet atau server pihak ketiga. |
+| **Kompatibilitas Peramban** | Cross-Browser Modern | Kompatibel penuh dengan Google Chrome, Microsoft Edge, Mozilla Firefox, dan Safari. |
+| **Arsitektur Kode** | Clean Architecture & Clean Code | Kode dipisahkan secara modular: `config/`, `domain/`, `services/`, `ui/`, dan `main.js` (SRP & OCP). |
 
 ---
 
-## 8. KAMUS PEMETAAN DATA (DATA MAPPING DICTIONARY)
+## 6. Technical Architecture & Clean Code Structure
 
-Berikut adalah ringkasan pemetaan variabel input formulir ke placeholder dalam template dokumen:
+Sistem dibangun menggunakan **HTML5, Vanilla CSS Modern, dan Vanilla JavaScript (ES6)** tanpa framework berat atau build tools:
 
-| No | Nama Variabel | Label Form | Tipe Input | Lokasi di Template DOCX |
+```
+📁 Format Digitalisasi (antigravity)/
+│
+├── 📄 index.html                  <-- Presentasi UI bersih tanpa inline style
+├── 🎨 style.css                   <-- Design system instansi (Navy/Gold palette)
+│
+├── 📁 js/
+│   ├── 📁 config/
+│   │   ├── wizard.config.js       <-- Metadata 7 langkah & required fields
+│   │   └── sample.data.js         <-- Preset data resmi KAK Kemenko PMK 2027
+│   │
+│   ├── 📁 domain/
+│   │   └── docx-rules.js          <-- Strategy Pattern (36+ Rules Registry pemetaan DOCX)
+│   │
+│   ├── 📁 services/
+│   │   ├── storage.service.js     <-- Layanan persistensi (localStorage & JSON File I/O)
+│   │   └── docx.service.js        <-- Layanan pengolah OpenXML & pembersihan highlight
+│   │
+│   ├── 📁 ui/
+│   │   ├── toast.component.js     <-- Komponen notifikasi pop-up mandiri
+│   │   ├── stepper.component.js   <-- Komponen navigasi langkah & progress tracker
+│   │   ├── repeater.component.js  <-- Komponen baris dinamis (tambah/hapus)
+│   │   └── form.manager.js        <-- Serializer, deserializer, & validator formulir
+│   │
+│   └── 📄 main.js                 <-- Application Orchestrator & Event Binder
+│
+├── 📁 libs/
+│   ├── jszip.min.js               <-- De/kompresi arsip ZIP DOCX
+│   └── FileSaver.min.js           <-- Pembantu unduhan file biner browser
+│
+└── 📁 template/
+    ├── template_kak.docx          <-- File master dokumen acuan
+    └── template-data.js           <-- Embedded Base64 fallback (Zero CORS offline)
+```
+
+---
+
+## 7. Data Mapping Dictionary (Form Fields to DOCX Placeholders)
+
+| No | Key Variabel Form | Label Input Formulir | Tipe Kontrol | Target Paragraf / Tabel DOCX |
 | :---: | :--- | :--- | :---: | :--- |
-| 1 | `asdep_nama` | Nama Asisten Deputi | Teks Singkat | Paragraf Cover & Header KAK |
-| 2 | `deputi_bidang` | Deputi Bidang | Dropdown / Teks | Paragraf Cover & Narasi Bab 2.1 |
-| 3 | `tahun_anggaran` | Tahun Anggaran | Angka (Tahun) | Header Dokumen, Subkomponen, RAB |
-| 4 | `ro_judul` | Judul Rincian Output (RO) | Teks Area Singkat | Cover, Header KAK, Bab Latar Belakang |
-| 5 | `ro_kode` | Kode RO | Teks Singkat | Penomoran RO |
-| 6 | `kro_nama` | Klasifikasi Rincian Output | Teks Singkat | Header KAK |
-| 7 | `kro_kode` | Kode KRO | Teks Singkat | Header KAK |
-| 8 | `dasar_hukum_list` | Daftar Regulasi / Dasar Hukum | Repeater List | Poin 1. Dasar Hukum (Undang-Undang, PP, Perpres) |
-| 9 | `perpres_sotk_no` | Nomor & Tahun Perpres SOTK | Teks Singkat | Bab 2.1 (Placeholder `(1)`) |
-| 10 | `perpres_sotk_tentang`| Judul Perpres SOTK | Teks Area Singkat | Bab 2.1 (Placeholder `(2)`) |
-| 11 | `urusan_pmk` | Urusan Pemerintahan Kemenko | Teks Area Singkat | Bab 2.1 (Placeholder `(3)`) |
-| 12 | `fungsi_deputi` | Penyelenggaraan Fungsi Deputi | Teks Area | Bab 2.1 (Placeholder `(5)` & `(6)`) |
-| 13 | `fungsi_asdep` | Fungsi Asisten Deputi | Teks Area | Bab 2.1 (Placeholder `(8)`) |
-| 14 | `kl_terkait_asdep` | K/L di Bawah Koordinasi Asdep | Teks Area / Tag | Bab 2.1 (Placeholder `(10)`) |
-| 15 | `rpjmn_pn_nomor` | Nomor Prioritas Nasional (PN) | Teks Singkat | Bab 2.1 (Placeholder `(12)`) |
-| 16 | `rpjmn_pn_nama` | Judul Prioritas Nasional | Teks Area | Bab 2.1 (Placeholder `(13)`) |
-| 17 | `rpjmn_pn_sasaran` | Sasaran Utama PN | Teks Area | Bab 2.1 (Placeholder `(15)`) |
-| 18 | `rkp_arah_kebijakan` | Arah Kebijakan RKP | Teks Area | Bab 2.1 |
-| 19 | `isu_strategis_narasi`| Narasi Isu & Gap Analysis | Teks Area Panjang | Bab 2.1 Paragraf Data Terbaru Program |
-| 20 | `rekomendasi_kebijakan`| Daftar Butir Rekomendasi | Repeater List | Bab 2.1 (Tujuan, Fokus, Harapan) |
-| 21 | `rb_indikator` | Indikator Reformasi Birokrasi | Teks Area | Bab 2.2 Pengawalan Indikator RB |
-| 22 | `gap_kesenjangan` | Kesenjangan Gender | Teks Area | Bab 2.3 & Lampiran I Matriks GAP |
-| 23 | `tahapan_kegiatan` | Rincian Tahapan Pelaksanaan | Repeater Multi-field | Bab C.2 Tahapan (Lokasi, Waktu, Peserta, Output) |
-| 24 | `jadwal_matriks` | Matriks Jadwal Jan-Des | Checkbox Grid | Bab D Matriks Waktu Pelaksanaan |
-| 25 | `total_anggaran` | Total Kebutuhan Anggaran | Currency / Teks | Bab E Biaya yang Dibutuhkan |
-| 26 | `pejabat_nama` | Nama Lengkap Asdep / PPK | Teks Singkat | Lembar Pengesahan Akhir |
-| 27 | `pejabat_nip` | NIP Pejabat | Angka / Teks | Lembar Pengesahan Akhir |
-| 28 | `tanggal_pengesahan` | Tanggal Pengesahan Dokumen | Tanggal / Teks | Lembar Pengesahan (contoh: Jakarta, ...) |
+| 1 | `asdep_nama` | Nama Asisten Deputi | Teks Singkat | Cover, Header KAK, Bab SOTK, RPJMN, GAP, Pengesahan |
+| 2 | `deputi_bidang` | Deputi Bidang | Teks Singkat | Cover, Header Matriks, Bab 2.1 SOTK |
+| 3 | `tahun_anggaran` | Tahun Anggaran | Angka | Cover, Header, Tahapan, RAB Bab E |
+| 4 | `ro_judul` | Judul Rincian Output (RO) | Teks Area | Cover, Matriks KAK, Bab Dasar Hukum, RAK |
+| 5 | `ro_kode` | Kode Rincian Output | Teks Singkat | Cover & Header Matriks |
+| 6 | `kro_nama` | Nama Bidang / KRO | Teks Singkat | Cover, Sasaran Kegiatan, Klasifikasi RO |
+| 7 | `kro_kode` | Kode KRO | Teks Singkat | Header Matriks KAK |
+| 8 | `kegiatan_nama` | Nama Kegiatan | Teks Singkat | Cover & Header Matriks KAK |
+| 9 | `kegiatan_kode` | Kode Kegiatan | Teks Singkat | Cover & Header Matriks KAK |
+| 10 | `ro_volume` | Volume RO | Teks Singkat | Header Matriks, Metode RAK, RAB Bab E |
+| 11 | `dasar_hukum` | Daftar Dasar Hukum | Repeater List | Bab A.1 Dasar Hukum (UU, PP, Perpres) |
+| 12 | `perpres_sotk_no` | No/Tahun Perpres SOTK | Teks Singkat | Bab 2.1 Placeholder `(1)` |
+| 13 | `perpres_sotk_tentang` | Judul Perpres SOTK | Teks Singkat | Bab 2.1 Placeholder `(2)` |
+| 14 | `urusan_pmk` | Urusan Kemenko PMK | Teks Singkat | Bab 2.1 Placeholder `(3)` |
+| 15 | `kl_mitra` | K/L di Bawah Koordinasi | Teks Area | Bab 2.1 Placeholder `(10)` |
+| 16 | `rpjmn_pn_no` | No Prioritas Nasional | Teks Singkat | Bab 2.1 Placeholder `(12)` & `(14)` |
+| 17 | `rpjmn_pn_nama` | Nama Prioritas Nasional | Teks Area | Bab 2.1 Placeholder `(13)` |
+| 18 | `rpjmn_pn_sasaran` | Sasaran Utama PN | Teks Area | Bab 2.1 Placeholder `(15)` |
+| 19 | `rkp_arah_kebijakan` | Arah Kebijakan RKP | Teks Area | Bab 2.1 Paragraf RPJMN/RKP |
+| 20 | `rpjmn_indikator` | Indikator RPJMN (Lamp III) | Teks Area | Bab 2.1 Paragraf Indikator RPJMN |
+| 21 | `isu_strategis_narasi`| Narasi Isu & Gap Analysis | Teks Area Panjang | Bab 2.1 Paragraf Data Terbaru Program |
+| 22 | `rekomendasi_judul` | Judul Butir Rekomendasi | Teks Singkat | Bab 2.1 Butir Rekomendasi |
+| 23 | `rekomendasi_tujuan` | Tujuan Rekomendasi | Teks Area | Bab 2.1 Butir Rekomendasi |
+| 24 | `rekomendasi_fokus` | Fokus Rekomendasi | Teks Singkat | Bab 2.1 Butir Rekomendasi |
+| 25 | `rekomendasi_harapan` | Harapan / Dampak | Teks Singkat | Bab 2.1 Butir Rekomendasi |
+| 26 | `rb_indikator` | Indikator Pengawalan RB | Teks Area | Bab 2.2 Reformasi Birokrasi |
+| 27 | `rb_narasi` | Catatan Narasi RB | Teks Area | Bab 2.2 Reformasi Birokrasi |
+| 28 | `gap_bidang` | Bidang Analisis Gender | Teks Singkat | Bab 2.3 Gender Analysis Pathway |
+| 29 | `gap_isu` | Bentuk Kesenjangan Gender | Teks Area | Bab 2.3 Gender Analysis Pathway |
+| 30 | `gap_faktor` | Faktor Penyebab GAP | Teks Singkat | Bab 2.3 Gender Analysis Pathway |
+| 31 | `gap_intervensi` | Bentuk Intervensi Kebijakan | Teks Area | Bab 2.3 Gender Analysis Pathway |
+| 32 | `penerima_lembaga` | Lembaga Eksternal | Repeater List | Bab B.1 Penerima Manfaat Lembaga |
+| 33 | `penerima_masyarakat`| Kelompok Masyarakat | Repeater List | Bab B.2 Penerima Manfaat Masyarakat |
+| 34 | `rak_judul` | Judul RAK 1 | Teks Singkat | Bab C.1 & C.2 Subkomponen 051 |
+| 35 | `tahap1_kegiatan` | Rincian Rapat Tahap 1–4 | Grid Multi-field | Bab C.2 (Lokasi, Waktu, Peserta, Output, Alasan) |
+| 36 | `jadwal_bulan` | Matriks Bulan 1–12 | Checkbox Grid | Bab D Kurun Waktu Pencapaian Keluaran |
+| 37 | `total_anggaran` | Total Nominal Anggaran | Currency / Teks | Bab E Biaya yang Dibutuhkan |
+| 38 | `total_anggaran_terbilang`| Terbilang Rupiah | Teks Singkat | Bab E Biaya yang Dibutuhkan |
+| 39 | `tanggal_pengesahan` | Tempat & Tanggal Dokumen | Teks Singkat | Lembar Pengesahan (contoh: Jakarta, ...) |
+| 40 | `pejabat_nama` | Nama Asisten Deputi / PPK | Teks Singkat | Lembar Pengesahan Tanda Tangan |
+| 41 | `pejabat_nip` | NIP Pejabat | Teks Singkat | Lembar Pengesahan Tanda Tangan |
 
 ---
 
-## 9. DESAIN ARSITEKTUR TEKNOLOGI (TECH STACK TERPILIH)
+## 8. Success Metrics & KPIs
 
-Berdasarkan pertimbangan kemudahan dipelajari, kecepatan implementasi, nol dependensi (*zero dependencies/zero build-step*), dan keamanan data internal instansi, tech stack resmi yang digunakan adalah:
-
-* **Frontend & UI Layer:**
-  * **HTML5 Semantik:** Struktur formulir *multi-step wizard*, tabel matriks kegiatan, dan kontrol input.
-  * **Modern Vanilla CSS:** Desain antarmuka berstandar instansi (palet warna Kemenko PMK: Deep Navy `#0B2B5C`, Royal Blue `#1E40AF`, Gold/Amber `#D97706`, dan latar netral modern). Mendukung *responsive layout* desktop/laptop tanpa memerlukan framework CSS berat.
-  * **Vanilla JavaScript (ES6 Modules):** Mengelola logika formulir, navigasi tahapan (*step wizard*), kalkulasi persentase kelengkapan, *real-time auto-save*, serta ekspor/impor draf `.json`.
-
-* **DOCX Manipulation Engine (100% Client-Side):**
-  * **`JSZip`:** Membaca, mengekstrak arsip `.docx` di memori browser, memodifikasi berkas OpenXML internal (`word/document.xml`), dan mengemas kembali menjadi dokumen Word siap pakai.
-  * **`DOMParser` & `XMLSerializer` bawaan Browser:** Menelusuri seluruh *run* teks `<w:r>` yang memiliki tag sorotan kuning `<w:highlight w:val="yellow"/>`, menyuntikkan nilai input pengguna, dan menghapus tag `<w:highlight>` secara bersih.
-  * **`FileSaver.js`:** Memastikan berkas biner `.docx` hasil generate langsung terunduh secara konsisten di semua peramban (Chrome, Edge, Firefox, Safari).
-
-* **Penyimpanan Data Draf:**
-  * **Browser `localStorage`:** Menyimpan status isian formulir secara otomatis saat staf mengetik (*zero data loss*).
-  * **File JSON Portabel:** Kemampuan ekspor dan impor file draf `.json` untuk kemudahan serah terima pekerjaan antar pegawai.
-
-* **Keunggulan Arsitektur Ini:**
-  1. **Nol Konfigurasi (*Zero Setup*):** Dapat dijalankan langsung dengan membuka berkas `index.html` di browser tanpa perlu menginstal Node.js, Python, atau database.
-  2. **100% Aman & Konfidensial:** Seluruh data KAK diproses di laptop pengguna tanpa pernah dikirimkan ke server publik pihak ketiga.
-  3. **Portabel & Mandiri:** Dapat digunakan secara *offline* tanpa memerlukan koneksi internet.
+| Metrik Keberhasilan | Target Kuantitatif | Metode Pengukuran |
+| :--- | :---: | :--- |
+| **Highlight Cleanup Rate** | **0% Sisa Kuning** | Pengujian ekstraksi XML menunjukkan 0 kemunculan tag `<w:highlight>`. |
+| **Format Integrity Rate** | **100% Presisi** | Tidak ada tabel, margin, atau hierarki font yang rusak dibanding template asli. |
+| **Waktu Pembuatan Dokumen** | **< 15 Menit** | Pengurangan waktu penyusunan KAK dari rata-rata 2 hari menjadi hitungan menit. |
+| **Zero Data Loss Rate** | **100% Retensi Draf** | Draf dapat dipulihkan otomatis saat peramban ditutup mendadak. |
+| **Adopsi Pengguna** | **100% Unit Kerja** | Dapat digunakan di seluruh Asdep lingkup Kemenko PMK tanpa kendala instalasi. |
 
 ---
 
-## 10. ROADMAP IMPLEMENTASI (FASE PENGEMBANGAN)
+## 9. Constraints, Risks & Mitigations
 
-* **Fase 1 (Analisis & Ekstraksi Template):** Pemetaan presisi seluruh tag `<w:highlight>` pada template `Copy of Format Digitalisasi KAK.docx` ke skema JSON.
-* **Fase 2 (Pengembangan UI Form Wizard):** Pembangunan antarmuka pengguna interaktif (Stepper 7 tahap, validasi field, penyimpanan draf di localStorage).
-* **Fase 3 (Pembangunan Engine Pengganti DOCX):** Integrasi fungsi pembacaan arsip DOCX, penggantian string placeholder, pembersihan sorotan kuning, dan ekspor berkas `.docx`.
-* **Fase 4 (Pengujian & Verifikasi):** Pengujian kesesuaian visual dokumen output terhadap sampel manual (`KAK-penanganan-bencana-2027.docx`).
-* **Fase 5 (Deployment & Dokumentasi Pengguna):** Peluncuran aplikasi dan penyusunan panduan singkat (*User Guide*).
+| Risiko / Kendala | Dampak | Strategi Mitigasi |
+| :--- | :--- | :--- |
+| **Keterbatasan CORS pada `file:///`** | Browser memblokir pembacaan file lokal jika dibuka via *double click*. | **Mitigasi:** Template master disematkan dalam bentuk Base64 di `template-data.js`, sehingga dapat dimuat instan tanpa request HTTP jaringan. |
+| **Perubahan Format Regulasi di Masa Depan** | Format KAK berubah sesuai arahan Kementerian Keuangan / Bappenas. | **Mitigasi:** Menerapkan *Strategy Pattern* pada `docx-rules.js` sehingga penambahan atau perubahan aturan dokumen dapat dilakukan secara modular tanpa mengubah inti aplikasi. |
+| **Kerahasiaan Data Perencanaan Anggaran** | Kebocoran data sebelum penetapan resmi DIPA kementerian. | **Mitigasi:** Seluruh pengolahan data berjalan **100% Client-Side** di laptop pegawai; data tidak pernah dikirim ke internet. |
+
+---
+
+## 10. Assumptions & Open Questions (TBD)
+
+### 10.1 Assumptions
+1. Dokumen acuan resmi saat ini adalah `Copy of Format Digitalisasi KAK.docx` yang berlaku di lingkungan Kemenko PMK.
+2. Pengguna membuka aplikasi menggunakan peramban modern (Google Chrome atau Microsoft Edge versi terbaru di Windows 10/11).
+3. Satuan default untuk Rincian Output adalah *"Rekomendasi Kebijakan"*.
+
+### 10.2 Open Questions (TBD)
+* *[Q-01 - Biro Perencanaan]:* Apakah di masa depan diperlukan integrasi ekspor langsung ke format aplikasi SAKTI Kementerian Keuangan? *(TBD untuk rilis v2.0)*.
+* *[Q-02 - Subkomponen Tambahan]:* Apakah ada unit kerja yang membutuhkan lebih dari 1 Subkomponen (misal: Subkomponen 052)? *(Saat ini template fokus pada Subkomponen 051)*.

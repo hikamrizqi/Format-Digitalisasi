@@ -735,13 +735,30 @@
   <!-- Toast Notification -->
   <div class="toast-container" id="toast-container"></div>
 
-  <!-- Pustaka Lokal & Skrip Aplikasi -->
+  <!-- Pustaka Vendor Lokal -->
   <script src="libs/jszip.min.js"></script>
   <script src="libs/FileSaver.min.js"></script>
+
+  <!-- Template Master (Embedded Base64 untuk 100% offline double-click) -->
   <script src="template-data.js"></script>
-  <script src="sample-data.js"></script>
-  <script src="docx-engine.js"></script>
-  <script src="app.js"></script>
+
+  <!-- Layer 1: Config & Domain Rules -->
+  <script src="js/config/wizard.config.js"></script>
+  <script src="js/config/sample.data.js"></script>
+  <script src="js/domain/docx-rules.js"></script>
+
+  <!-- Layer 2: Services Layer -->
+  <script src="js/services/storage.service.js"></script>
+  <script src="js/services/docx.service.js"></script>
+
+  <!-- Layer 3: UI Components Layer -->
+  <script src="js/ui/toast.component.js"></script>
+  <script src="js/ui/stepper.component.js"></script>
+  <script src="js/ui/repeater.component.js"></script>
+  <script src="js/ui/form.manager.js"></script>
+
+  <!-- Layer 4: Application Orchestrator -->
+  <script src="js/main.js"></script>
 
 </body>
 </html>
