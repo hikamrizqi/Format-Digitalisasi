@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KAK Digitalizer - Kemenko PMK</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       HEADER INSTANSI
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-logo">🏛️</div>
+        <div class="brand-text">
+          <h1>KAK Digitalizer</h1>
+          <p>Kementerian Koordinator Bidang Pembangunan Manusia dan Kebudayaan</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="btn-header btn-demo" id="btn-load-demo" title="Muat contoh isian lengkap dari draf Kemenko PMK">
+          ✨ Muat Contoh Data KAK 2027
+        </button>
+        <button type="button" class="btn-header" id="btn-export-draft" title="Simpan isian ke file JSON">
+          💾 Ekspor Draf JSON
+        </button>
+        <button type="button" class="btn-header" id="btn-import-trigger" title="Buka draf dari file JSON">
+          📂 Impor Draf JSON
+        </button>
+        <input type="file" id="input-import-file" accept=".json" style="display: none;">
+        <button type="button" class="btn-header" id="btn-reset-form" title="Bersihkan semua isian">
+          🔄 Reset
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       STEPPER PROGRESS BAR
+       ========================================================================== -->
+  <section class="stepper-section">
+    <div class="stepper-container">
+      <div class="progress-info">
+        <span id="step-title-display">Langkah 1 dari 7: Cover & Identitas KAK</span>
+        <span id="progress-percentage">Kelengkapan: 15%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+      </div>
+
+      <nav class="stepper-nav" id="stepper-nav">
+        <button type="button" class="step-tab active" data-step="1">
+          <span class="step-badge">1</span> Cover & Identitas
+        </button>
+        <button type="button" class="step-tab" data-step="2">
+          <span class="step-badge">2</span> Dasar Hukum & SOTK
+        </button>
+        <button type="button" class="step-tab" data-step="3">
+          <span class="step-badge">3</span> RPJMN & Kebijakan
+        </button>
+        <button type="button" class="step-tab" data-step="4">
+          <span class="step-badge">4</span> RB & Gender (GAP)
+        </button>
+        <button type="button" class="step-tab" data-step="5">
+          <span class="step-badge">5</span> Tahapan Pelaksanaan
+        </button>
+        <button type="button" class="step-tab" data-step="6">
+          <span class="step-badge">6</span> Jadwal & Anggaran
+        </button>
+        <button type="button" class="step-tab" data-step="7">
+          <span class="step-badge">7</span> Pengesahan & Unduh
+        </button>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MAIN FORM CONTAINER
+       ========================================================================== -->
+  <main class="main-container">
+    <form id="kak-form" autocomplete="off">
+
+      <!-- ====================================================================
+           LANGKAH 1: COVER & IDENTITAS KAK
+           ==================================================================== -->
+      <div class="step-content active" id="step-1">
+        <div class="form-card">
+          <div class="card-header">
+            <div>
+              <h2>📋 Informasi Satuan Kerja & Cover Dokumen</h2>
+              <p>Mengisi unit kerja, tahun anggaran, serta nama kegiatan dan output sesuai DIPA/Renstra.</p>
+            </div>
+            <span class="template-badge">Bagian Cover & Header Matriks KAK</span>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="asdep_nama">Nama Asisten Deputi <span class="required">*</span></label>
+              <input type="text" id="asdep_nama" name="asdep_nama" placeholder="Contoh: Penanganan Bencana" required>
+              <span class="helper-text">Ditulis tanpa kata "Asisten Deputi" (otomatis diformat di dokumen).</span>
+            </div>
+
+            <div class="form-group">
+              <label for="deputi_bidang">Deputi Bidang <span class="required">*</span></label>
+              <input type="text" id="deputi_bidang" name="deputi_bidang" placeholder="Contoh: Koordinasi Peningkatan Kualitas Kesehatan dan Pembangunan Keluarga" required>
+            </div>
+
+            <div class="form-group">
+              <label for="tahun_anggaran">Tahun Anggaran <span class="required">*</span></label>
+              <input type="number" id="tahun_anggaran" name="tahun_anggaran" value="2027" required>
+            </div>
+
+            <div class="form-group">
+              <label for="ro_volume">Volume Rincian Output (RO)</label>
+              <input type="text" id="ro_volume" name="ro_volume" value="1" placeholder="Contoh: 1">
+              <span class="helper-text">Satuan standar: Rekomendasi Kebijakan.</span>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="ro_judul">Judul Rincian Output (RO) <span class="required">*</span></label>
+              <textarea id="ro_judul" name="ro_judul" rows="2" placeholder="Contoh: Rekomendasi Alternatif Kebijakan Kesiapsiagaan dan Mitigasi Bencana Daerah serta Ketahanan Iklim Inklusif" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="ro_kode">Kode Rincian Output (RO)</label>
+              <input type="text" id="ro_kode" name="ro_kode" placeholder="Contoh: 036.01.RO.1223">
+            </div>
+
+            <div class="form-group">
+              <label for="kro_kode">Kode Klasifikasi Rincian Output (KRO)</label>
+              <input type="text" id="kro_kode" name="kro_kode" placeholder="Contoh: 036.KRO.01">
+            </div>
+
+            <div class="form-group">
+              <label for="kro_nama">Nama Bidang / KRO <span class="required">*</span></label>
+              <input type="text" id="kro_nama" name="kro_nama" placeholder="Contoh: Bidang Kesehatan dan Mitigasi Bencana" required>
+            </div>
+
+            <div class="form-group">
+              <label for="kegiatan_nama">Nama Kegiatan <span class="required">*</span></label>
+              <input type="text" id="kegiatan_nama" name="kegiatan_nama" placeholder="Contoh: Kebijakan Penanganan Bencana dan Adaptasi Perubahan Iklim" required>
+            </div>
+
+            <div class="form-group">
+              <label for="kegiatan_kode">Kode Kegiatan</label>
+              <input type="text" id="kegiatan_kode" name="kegiatan_kode" placeholder="Contoh: 111">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           LANGKAH 2: DASAR HUKUM & SOTK
+           ==================================================================== -->
+      <div class="step-content" id="step-2">
+        <div class="form-card">
+          <div class="card-header">
+            <div>
+              <h2>⚖️ Dasar Hukum & Tugas Fungsi (SOTK Kemenko PMK)</h2>
+              <p>Peraturan perundangan yang mendasari pelaksanaan tugas fungsi dan kewenangan Asisten Deputi.</p>
+            </div>
+            <span class="template-badge">Bagian A.1 Dasar Hukum & A.2 SOTK</span>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label>Daftar Regulasi / Dasar Hukum Langsung terkait RO <span class="required">*</span></label>
+            <div class="repeater-container" id="repeater-dasar-hukum">
+              <!-- Item akan dirender secara dinamis oleh JavaScript -->
+            </div>
+            <button type="button" class="btn-add-row" id="btn-add-dasar-hukum">➕ Tambah Dasar Hukum</button>
+          </div>
+
+          <hr style="border: none; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+
+          <h3 style="font-size: 1rem; color: var(--primary); margin-bottom: 1rem;">Peraturan Presiden SOTK Kemenko PMK (Bab 2.1)</h3>
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="perpres_sotk_no">Nomor & Tahun Perpres SOTK <span class="required">*</span></label>
+              <input type="text" id="perpres_sotk_no" name="perpres_sotk_no" value="144 Tahun 2024" required>
+              <span class="helper-text">Mengisi placeholder nomor (1).</span>
+            </div>
+
+            <div class="form-group">
+              <label for="perpres_sotk_tentang">Tentang Perpres SOTK <span class="required">*</span></label>
+              <input type="text" id="perpres_sotk_tentang" name="perpres_sotk_tentang" value="Kementerian Koordinator Bidang Pembangunan Manusia dan Kebudayaan" required>
+              <span class="helper-text">Mengisi placeholder judul (2).</span>
+            </div>
+
+            <div class="form-group">
+              <label for="urusan_pmk">Urusan Pemerintahan Kemenko PMK</label>
+              <input type="text" id="urusan_pmk" name="urusan_pmk" value="pembangunan manusia dan kebudayaan">
+              <span class="helper-text">Mengisi placeholder urusan (3).</span>
+            </div>
+
+            <div class="form-group">
+              <label for="fungsi_deputi_bidang">Penyelenggaraan Fungsi Deputi</label>
+              <input type="text" id="fungsi_deputi_bidang" name="fungsi_deputi_bidang" value="koordinasi dan sinkronisasi perumusan, penetapan, dan pelaksanaan">
+              <span class="helper-text">Mengisi placeholder fungsi Deputi (5).</span>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="fungsi_asdep">Fungsi yang Dijalankan Asisten Deputi</label>
+              <input type="text" id="fungsi_asdep" name="fungsi_asdep" value="koordinasi, sinkronisasi, pemantauan, dan evaluasi kebijakan">
+              <span class="helper-text">Mengisi placeholder fungsi Asdep (8).</span>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="kl_mitra">Kementerian/Lembaga di Bawah Koordinasi Asisten Deputi <span class="required">*</span></label>
+              <textarea id="kl_mitra" name="kl_mitra" rows="2" placeholder="Contoh: Kementerian Kesehatan, BNPB, Kemensos, BMKG, Bappenas, dan Pemerintah Daerah" required></textarea>
+              <span class="helper-text">Mengisi placeholder K/L mitra koordinasi (10).</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           LANGKAH 3: RPJMN & REKOMENDASI KEBIJAKAN
+           ==================================================================== -->
+      <div class="step-content" id="step-3">
+        <div class="form-card">
+          <div class="card-header">
+            <div>
+              <h2>🎯 Keselarasan RPJMN 2025–2029 & Butir Rekomendasi</h2>
+              <p>Keterhubungan program dengan Prioritas Nasional, sasaran pembangunan, serta output rekomendasi.</p>
+            </div>
+            <span class="template-badge">Bagian A.2 RPJMN, RKP, & Rekomendasi</span>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="rpjmn_pn_no">Nomor Prioritas Nasional (PN) <span class="required">*</span></label>
+              <input type="text" id="rpjmn_pn_no" name="rpjmn_pn_no" placeholder="Contoh: 5" required>
+              <span class="helper-text">Mengisi placeholder PN (12).</span>
+            </div>
+
+            <div class="form-group">
+              <label for="rpjmn_pn_nama">Judul Prioritas Nasional (PN) <span class="required">*</span></label>
+              <input type="text" id="rpjmn_pn_nama" name="rpjmn_pn_nama" placeholder="Contoh: Memantapkan Ketahanan Nasional dan Kemandirian Bangsa" required>
+              <span class="helper-text">Mengisi placeholder nama PN (13).</span>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="rpjmn_pn_sasaran">Sasaran Utama PN <span class="required">*</span></label>
+              <textarea id="rpjmn_pn_sasaran" name="rpjmn_pn_sasaran" rows="2" placeholder="Sasaran utama pembangunan nasional..." required></textarea>
+              <span class="helper-text">Mengisi placeholder sasaran PN (15).</span>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="rkp_arah_kebijakan">Arah Kebijakan Rencana Kerja Pemerintah (RKP) <span class="required">*</span></label>
+              <textarea id="rkp_arah_kebijakan" name="rkp_arah_kebijakan" rows="2" placeholder="Arah kebijakan turunan RPJMN pada tahun anggaran berjalan..." required></textarea>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="fokus_intervensi">Fokus Intervensi Kebijakan</label>
+              <input type="text" id="fokus_intervensi" name="fokus_intervensi" placeholder="Fokus intervensi kebijakan yang diampu...">
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="rpjmn_indikator">Program & Indikator RPJMN (Lampiran III RPJMN) <span class="required">*</span></label>
+              <textarea id="rpjmn_indikator" name="rpjmn_indikator" rows="2" placeholder="1) Indikator A... 2) Indikator B... 3) dst" required></textarea>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="isu_strategis_narasi">Narasi Isu Strategis, Data Terkini & Analisis Kesenjangan (Gap Analysis) <span class="required">*</span></label>
+              <textarea id="isu_strategis_narasi" name="isu_strategis_narasi" rows="4" placeholder="Uraian kondisi eksisting, data capaian, gap analysis, dan konsentrasi kewilayahan yang menjadi konsentrasi SKP..." required></textarea>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="program_prioritas_lain">Program Prioritas Lainnya yang Dikoordinasikan (Opsional)</label>
+              <input type="text" id="program_prioritas_lain" name="program_prioritas_lain" placeholder="Contoh: PKPN, Inpres Kesiapsiagaan Bencana, Manajemen Risiko (MRPN)">
+            </div>
+          </div>
+
+          <hr style="border: none; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+
+          <h3 style="font-size: 1rem; color: var(--primary); margin-bottom: 1rem;">Butir Rekomendasi Alternatif Kebijakan</h3>
+          <div class="grid-2">
+            <div class="form-group col-span-2">
+              <label for="rekomendasi_judul">Judul Rekomendasi Kebijakan</label>
+              <input type="text" id="rekomendasi_judul" name="rekomendasi_judul" placeholder="Judul rekomendasi kebijakan yang dihasilkan...">
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="rekomendasi_tujuan">Tujuan Rekomendasi</label>
+              <textarea id="rekomendasi_tujuan" name="rekomendasi_tujuan" rows="2" placeholder="Rekomendasi alternatif kebijakan ini bertujuan untuk..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="rekomendasi_fokus">Fokus Rekomendasi</label>
+              <input type="text" id="rekomendasi_fokus" name="rekomendasi_fokus" placeholder="Rekomendasi difokuskan pada...">
+            </div>
+
+            <div class="form-group">
+              <label for="rekomendasi_harapan">Harapan / Dampak</label>
+              <input type="text" id="rekomendasi_harapan" name="rekomendasi_harapan" placeholder="Melalui kebijakan ini diharapkan...">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           LANGKAH 4: REFORMASI BIROKRASI & GENDER (GAP)
+           ==================================================================== -->
+      <div class="step-content" id="step-4">
+        <div class="form-card">
+          <div class="card-header">
+            <div>
+              <h2>🏛️ Reformasi Birokrasi (RB) & Gender (GAP)</h2>
+              <p>Pengawalan indikator RB tematik/general serta pengarusutamaan gender melalui Gender Analysis Pathway.</p>
+            </div>
+            <span class="template-badge">Bagian A.2.2 RB & A.2.3 PUG (GAP)</span>
+          </div>
+
+          <h3 style="font-size: 1rem; color: var(--primary); margin-bottom: 0.75rem;">2.2 Program Terkait Reformasi Birokrasi (RB)</h3>
+          <div class="grid-1" style="margin-bottom: 1.5rem;">
+            <div class="form-group">
+              <label for="rb_indikator">Indikator RB yang Dikawal <span class="required">*</span></label>
+              <textarea id="rb_indikator" name="rb_indikator" rows="2" placeholder="1) Capaian RB Tematik... 2) Efektivitas koordinasi... dst" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="rb_narasi">Catatan Narasi Pelaksanaan RB (Regulasi, Hambatan, Kolaborasi) <span class="required">*</span></label>
+              <textarea id="rb_narasi" name="rb_narasi" rows="3" placeholder="Narasi regulasi pendukung, kondisi capaian, isu strategis, faktor pendorong/penghambat, serta keterlibatan stakeholder..." required></textarea>
+            </div>
+          </div>
+
+          <hr style="border: none; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+
+          <h3 style="font-size: 1rem; color: var(--primary); margin-bottom: 0.75rem;">2.3 Pengarusutamaan Gender dalam Pelaksanaan Program (GAP)</h3>
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="gap_bidang">Bidang Kebijakan Gender</label>
+              <input type="text" id="gap_bidang" name="gap_bidang" placeholder="Contoh: penanggulangan bencana dan perlindungan sosial darurat">
+            </div>
+
+            <div class="form-group">
+              <label for="gap_faktor">Faktor Penyebab Kesenjangan</label>
+              <input type="text" id="gap_faktor" name="gap_faktor" placeholder="Faktor penyebab kesenjangan gender...">
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="gap_isu">Bentuk Kesenjangan Gender yang Ditemukan</label>
+              <textarea id="gap_isu" name="gap_isu" rows="2" placeholder="Kesenjangan dalam akses, partisipasi, kontrol, atau manfaat bagi perempuan, anak, disabilitas, atau lansia..."></textarea>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="gap_intervensi">Intervensi Kebijakan Kemenko PMK</label>
+              <textarea id="gap_intervensi" name="gap_intervensi" rows="2" placeholder="Intervensi yang dilakukan melalui koordinasi dan penyusunan modul/kebijakan responsif gender..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           LANGKAH 5: PENERIMA MANFAAT & TAHAPAN KEGIATAN
+           ==================================================================== -->
+      <div class="step-content" id="step-5">
+        <div class="form-card">
+          <div class="card-header">
+            <div>
+              <h2>👥 Penerima Manfaat & Tahapan Pelaksanaan Kegiatan</h2>
+              <p>Rincian pemangku kepentingan dan 4 tahapan rapat pelaksanaan untuk Subkomponen 051.</p>
+            </div>
+            <span class="template-badge">Bagian B Penerima Manfaat & C Strategi</span>
+          </div>
+
+          <div class="grid-2" style="margin-bottom: 1.5rem;">
+            <div class="form-group">
+              <label>Lembaga Eksternal Penerima Manfaat</label>
+              <div class="repeater-container" id="repeater-lembaga">
+                <!-- Item dinamis -->
+              </div>
+              <button type="button" class="btn-add-row" id="btn-add-lembaga">➕ Tambah Lembaga</button>
+            </div>
+
+            <div class="form-group">
+              <label>Kelompok Masyarakat Penerima Manfaat</label>
+              <div class="repeater-container" id="repeater-masyarakat">
+                <!-- Item dinamis -->
+              </div>
+              <button type="button" class="btn-add-row" id="btn-add-masyarakat">➕ Tambah Kelompok</button>
+            </div>
+          </div>
+
+          <hr style="border: none; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="rak_judul">Judul Rencana Aksi Koordinasi (RAK 1) <span class="required">*</span></label>
+            <input type="text" id="rak_judul" name="rak_judul" placeholder="Contoh: Pengembangan Kebijakan Mitigasi Bencana Daerah Terpadu dan Responsif Gender" required>
+          </div>
+
+          <!-- Tahap 1: Identifikasi Permasalahan -->
+          <div style="background: var(--bg); padding: 1.25rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; border: 1px solid var(--border);">
+            <h4 style="color: var(--primary); margin-bottom: 0.75rem;">Tahap 1: Identifikasi Permasalahan</h4>
+            <div class="grid-3">
+              <div class="form-group col-span-3">
+                <label for="tahap1_kegiatan">Nama Rapat / Kegiatan</label>
+                <input type="text" id="tahap1_kegiatan" name="tahap1_kegiatan" value="Rapat Koordinasi Identifikasi Permasalahan">
+              </div>
+              <div class="form-group">
+                <label for="tahap1_prov">Provinsi</label>
+                <input type="text" id="tahap1_prov" name="tahap1_prov" placeholder="Contoh: Jawa Tengah">
+              </div>
+              <div class="form-group">
+                <label for="tahap1_kota">Kabupaten / Kota</label>
+                <input type="text" id="tahap1_kota" name="tahap1_kota" placeholder="Contoh: Banyumas">
+              </div>
+              <div class="form-group">
+                <label for="tahap1_bulan">Bulan Pelaksanaan</label>
+                <input type="text" id="tahap1_bulan" name="tahap1_bulan" placeholder="Contoh: Februari">
+              </div>
+              <div class="form-group col-span-2">
+                <label for="tahap1_peserta">Peserta Terundang (K/L & Pemda)</label>
+                <input type="text" id="tahap1_peserta" name="tahap1_peserta" placeholder="K/L terkait atau peserta rapat...">
+              </div>
+              <div class="form-group">
+                <label for="tahap1_jml_peserta">Jumlah Peserta (orang)</label>
+                <input type="number" id="tahap1_jml_peserta" name="tahap1_jml_peserta" placeholder="50">
+              </div>
+              <div class="form-group col-span-3">
+                <label for="tahap1_output">Output yang Dicapai</label>
+                <input type="text" id="tahap1_output" name="tahap1_output" placeholder="Tersusunnya daftar inventarisasi masalah (DIM)...">
+              </div>
+              <div class="form-group col-span-3">
+                <label for="tahap1_alasan">Alasan Pemilihan Lokasi (Bila di luar DKI)</label>
+                <input type="text" id="tahap1_alasan" name="tahap1_alasan" placeholder="Alasan strategis pemilihan lokasi...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Tahap 2: Sinkronisasi, Koordinasi & Pengendalian -->
+          <div style="background: var(--bg); padding: 1.25rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; border: 1px solid var(--border);">
+            <h4 style="color: var(--primary); margin-bottom: 0.75rem;">Tahap 2: Sinkronisasi, Koordinasi, dan Pengendalian (SKP)</h4>
+            <div class="grid-3">
+              <div class="form-group col-span-3">
+                <label for="tahap2_kegiatan">Nama Forum / Kegiatan</label>
+                <input type="text" id="tahap2_kegiatan" name="tahap2_kegiatan" value="Forum Koordinasi dan Pengendalian Kebijakan">
+              </div>
+              <div class="form-group">
+                <label for="tahap2_prov">Provinsi</label>
+                <input type="text" id="tahap2_prov" name="tahap2_prov" placeholder="Contoh: DKI Jakarta">
+              </div>
+              <div class="form-group">
+                <label for="tahap2_kota">Kabupaten / Kota</label>
+                <input type="text" id="tahap2_kota" name="tahap2_kota" placeholder="Contoh: Jakarta Pusat">
+              </div>
+              <div class="form-group">
+                <label for="tahap2_bulan">Bulan Pelaksanaan</label>
+                <input type="text" id="tahap2_bulan" name="tahap2_bulan" placeholder="Contoh: Mei">
+              </div>
+              <div class="form-group col-span-2">
+                <label for="tahap2_peserta">Peserta Terundang</label>
+                <input type="text" id="tahap2_peserta" name="tahap2_peserta" placeholder="Perwakilan K/L pengampu...">
+              </div>
+              <div class="form-group">
+                <label for="tahap2_jml_peserta">Jumlah Peserta (orang)</label>
+                <input type="number" id="tahap2_jml_peserta" name="tahap2_jml_peserta" placeholder="75">
+              </div>
+              <div class="form-group col-span-3">
+                <label for="tahap2_output">Output yang Dicapai</label>
+                <input type="text" id="tahap2_output" name="tahap2_output" placeholder="Kesepakatan bersama rencana aksi koordinasi lintas K/L...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Tahap 3: Monitoring & Evaluasi -->
+          <div style="background: var(--bg); padding: 1.25rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; border: 1px solid var(--border);">
+            <h4 style="color: var(--primary); margin-bottom: 0.75rem;">Tahap 3: Monitoring dan Evaluasi (Monev)</h4>
+            <div class="grid-3">
+              <div class="form-group col-span-3">
+                <label for="tahap3_kegiatan">Nama Kegiatan Kunjungan / Monev</label>
+                <input type="text" id="tahap3_kegiatan" name="tahap3_kegiatan" value="Kunjungan Lapangan Pemantauan dan Evaluasi">
+              </div>
+              <div class="form-group">
+                <label for="tahap3_prov">Provinsi</label>
+                <input type="text" id="tahap3_prov" name="tahap3_prov" placeholder="Contoh: Sulawesi Tengah">
+              </div>
+              <div class="form-group">
+                <label for="tahap3_kota">Kabupaten / Kota</label>
+                <input type="text" id="tahap3_kota" name="tahap3_kota" placeholder="Contoh: Palu">
+              </div>
+              <div class="form-group">
+                <label for="tahap3_bulan">Bulan Pelaksanaan</label>
+                <input type="text" id="tahap3_bulan" name="tahap3_bulan" placeholder="Contoh: Agustus">
+              </div>
+              <div class="form-group col-span-2">
+                <label for="tahap3_peserta">Peserta Kunjungan</label>
+                <input type="text" id="tahap3_peserta" name="tahap3_peserta" placeholder="Tim terpadu pusat dan daerah...">
+              </div>
+              <div class="form-group">
+                <label for="tahap3_jml_peserta">Jumlah Peserta (orang)</label>
+                <input type="number" id="tahap3_jml_peserta" name="tahap3_jml_peserta" placeholder="25">
+              </div>
+              <div class="form-group col-span-3">
+                <label for="tahap3_output">Output yang Dicapai</label>
+                <input type="text" id="tahap3_output" name="tahap3_output" placeholder="Laporan hasil audit fisik sarana dan rekomendasi tindak lanjut...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Tahap 4: Penyusunan Rekomendasi Kebijakan -->
+          <div style="background: var(--bg); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+            <h4 style="color: var(--primary); margin-bottom: 0.75rem;">Tahap 4: Penyusunan Rekomendasi Kebijakan</h4>
+            <div class="grid-3">
+              <div class="form-group col-span-3">
+                <label for="tahap4_kegiatan">Nama Rapat / Konsinyering</label>
+                <input type="text" id="tahap4_kegiatan" name="tahap4_kegiatan" value="Konsinyering Finalisasi Penyusunan Rekomendasi Kebijakan">
+              </div>
+              <div class="form-group">
+                <label for="tahap4_prov">Provinsi</label>
+                <input type="text" id="tahap4_prov" name="tahap4_prov" placeholder="Contoh: DKI Jakarta">
+              </div>
+              <div class="form-group">
+                <label for="tahap4_kota">Kabupaten / Kota</label>
+                <input type="text" id="tahap4_kota" name="tahap4_kota" placeholder="Contoh: Jakarta Pusat">
+              </div>
+              <div class="form-group">
+                <label for="tahap4_bulan">Bulan Pelaksanaan</label>
+                <input type="text" id="tahap4_bulan" name="tahap4_bulan" placeholder="Contoh: Oktober">
+              </div>
+              <div class="form-group col-span-2">
+                <label for="tahap4_peserta">Peserta Terundang</label>
+                <input type="text" id="tahap4_peserta" name="tahap4_peserta" placeholder="K/L teknis, pakar, dan akademisi...">
+              </div>
+              <div class="form-group">
+                <label for="tahap4_jml_peserta">Jumlah Peserta (orang)</label>
+                <input type="number" id="tahap4_jml_peserta" name="tahap4_jml_peserta" placeholder="40">
+              </div>
+              <div class="form-group col-span-3">
+                <label for="tahap4_output">Output yang Dicapai</label>
+                <input type="text" id="tahap4_output" name="tahap4_output" placeholder="Dokumen Naskah Rekomendasi Kebijakan siap serah kepada Menko PMK...">
+              </div>
+              <div class="form-group col-span-3">
+                <label for="subkomponen_anggaran">Estimasi Anggaran Subkomponen 051</label>
+                <input type="text" id="subkomponen_anggaran" name="subkomponen_anggaran" placeholder="Contoh: Rp 350.000.000">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           LANGKAH 6: JADWAL & ANGGARAN (RAB)
+           ==================================================================== -->
+      <div class="step-content" id="step-6">
+        <div class="form-card">
+          <div class="card-header">
+            <div>
+              <h2>📅 Matriks Jadwal Bulanan & Total Anggaran (RAB)</h2>
+              <p>Menentukan kurun waktu pelaksanaan per tahapan kegiatan dan total alokasi anggaran KAK.</p>
+            </div>
+            <span class="template-badge">Bagian D Kurun Waktu & E Biaya</span>
+          </div>
+
+          <h3 style="font-size: 1rem; color: var(--primary); margin-bottom: 0.5rem;">Matriks Waktu Pelaksanaan Kegiatan (Bulan 1–12)</h3>
+          <p class="helper-text" style="margin-bottom: 0.75rem;">Centang bulan-bulan di mana masing-masing kegiatan dijadwalkan berlangsung:</p>
+
+          <div class="matrix-table-wrapper">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Tahapan Kegiatan</th>
+                  <th>Jan (1)</th>
+                  <th>Feb (2)</th>
+                  <th>Mar (3)</th>
+                  <th>Apr (4)</th>
+                  <th>Mei (5)</th>
+                  <th>Jun (6)</th>
+                  <th>Jul (7)</th>
+                  <th>Agu (8)</th>
+                  <th>Sep (9)</th>
+                  <th>Okt (10)</th>
+                  <th>Nov (11)</th>
+                  <th>Des (12)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1. Identifikasi Permasalahan</td>
+                  <td><input type="checkbox" name="jadwal_tahap1_1"></td>
+                  <td><input type="checkbox" name="jadwal_tahap1_2" checked></td>
+                  <td><input type="checkbox" name="jadwal_tahap1_3" checked></td>
+                  <td><input type="checkbox" name="jadwal_tahap1_4"></td>
+                  <td><input type="checkbox" name="jadwal_tahap1_5"></td>
+                  <td><input type="checkbox" name="jadwal_tahap1_6"></td>
+                  <td><input type="checkbox" name="jadwal_tahap1_7"></td>
+                  <td><input type="checkbox" name="jadwal_tahap1_8"></td>
+                  <td><input type="checkbox" name="jadwal_tahap1_9"></td>
+                  <td><input type="checkbox" name="jadwal_tahap1_10"></td>
+                  <td><input type="checkbox" name="jadwal_tahap1_11"></td>
+                  <td><input type="checkbox" name="jadwal_tahap1_12"></td>
+                </tr>
+                <tr>
+                  <td>2. Sinkronisasi, Koordinasi & Pengendalian</td>
+                  <td><input type="checkbox" name="jadwal_tahap2_1"></td>
+                  <td><input type="checkbox" name="jadwal_tahap2_2"></td>
+                  <td><input type="checkbox" name="jadwal_tahap2_3"></td>
+                  <td><input type="checkbox" name="jadwal_tahap2_4" checked></td>
+                  <td><input type="checkbox" name="jadwal_tahap2_5" checked></td>
+                  <td><input type="checkbox" name="jadwal_tahap2_6" checked></td>
+                  <td><input type="checkbox" name="jadwal_tahap2_7"></td>
+                  <td><input type="checkbox" name="jadwal_tahap2_8"></td>
+                  <td><input type="checkbox" name="jadwal_tahap2_9"></td>
+                  <td><input type="checkbox" name="jadwal_tahap2_10"></td>
+                  <td><input type="checkbox" name="jadwal_tahap2_11"></td>
+                  <td><input type="checkbox" name="jadwal_tahap2_12"></td>
+                </tr>
+                <tr>
+                  <td>3. Monitoring dan Evaluasi</td>
+                  <td><input type="checkbox" name="jadwal_tahap3_1"></td>
+                  <td><input type="checkbox" name="jadwal_tahap3_2"></td>
+                  <td><input type="checkbox" name="jadwal_tahap3_3"></td>
+                  <td><input type="checkbox" name="jadwal_tahap3_4"></td>
+                  <td><input type="checkbox" name="jadwal_tahap3_5"></td>
+                  <td><input type="checkbox" name="jadwal_tahap3_6"></td>
+                  <td><input type="checkbox" name="jadwal_tahap3_7" checked></td>
+                  <td><input type="checkbox" name="jadwal_tahap3_8" checked></td>
+                  <td><input type="checkbox" name="jadwal_tahap3_9" checked></td>
+                  <td><input type="checkbox" name="jadwal_tahap3_10"></td>
+                  <td><input type="checkbox" name="jadwal_tahap3_11"></td>
+                  <td><input type="checkbox" name="jadwal_tahap3_12"></td>
+                </tr>
+                <tr>
+                  <td>4. Menyusun Rekomendasi Kebijakan</td>
+                  <td><input type="checkbox" name="jadwal_tahap4_1"></td>
+                  <td><input type="checkbox" name="jadwal_tahap4_2"></td>
+                  <td><input type="checkbox" name="jadwal_tahap4_3"></td>
+                  <td><input type="checkbox" name="jadwal_tahap4_4"></td>
+                  <td><input type="checkbox" name="jadwal_tahap4_5"></td>
+                  <td><input type="checkbox" name="jadwal_tahap4_6"></td>
+                  <td><input type="checkbox" name="jadwal_tahap4_7"></td>
+                  <td><input type="checkbox" name="jadwal_tahap4_8"></td>
+                  <td><input type="checkbox" name="jadwal_tahap4_9"></td>
+                  <td><input type="checkbox" name="jadwal_tahap4_10" checked></td>
+                  <td><input type="checkbox" name="jadwal_tahap4_11" checked></td>
+                  <td><input type="checkbox" name="jadwal_tahap4_12"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr style="border: none; border-top: 1px solid var(--border); margin: 1.75rem 0;">
+
+          <h3 style="font-size: 1rem; color: var(--primary); margin-bottom: 1rem;">Total Kebutuhan Anggaran (Bab E)</h3>
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="total_anggaran">Total Nominal Anggaran <span class="required">*</span></label>
+              <input type="text" id="total_anggaran" name="total_anggaran" placeholder="Contoh: Rp 995.000.000" required>
+            </div>
+
+            <div class="form-group">
+              <label for="total_anggaran_terbilang">Terbilang (Narasi Rupiah) <span class="required">*</span></label>
+              <input type="text" id="total_anggaran_terbilang" name="total_anggaran_terbilang" placeholder="Contoh: sembilan ratus sembilan puluh lima juta rupiah" required>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           LANGKAH 7: PENGESAHAN & GENERATE DOCX
+           ==================================================================== -->
+      <div class="step-content" id="step-7">
+        <div class="form-card">
+          <div class="card-header">
+            <div>
+              <h2>✍️ Lembar Pengesahan & Unduh Dokumen Final</h2>
+              <p>Tanda tangan pejabat penanggung jawab dan pembuatan berkas Word (.docx) resmi.</p>
+            </div>
+            <span class="template-badge">Lembar Pengesahan Kemenko PMK</span>
+          </div>
+
+          <div class="grid-3" style="margin-bottom: 1.5rem;">
+            <div class="form-group">
+              <label for="tanggal_pengesahan">Tempat & Tanggal Pengesahan <span class="required">*</span></label>
+              <input type="text" id="tanggal_pengesahan" name="tanggal_pengesahan" value="15 Januari 2027" placeholder="Contoh: 15 Januari 2027" required>
+            </div>
+
+            <div class="form-group">
+              <label for="pejabat_nama">Nama Pejabat Asisten Deputi <span class="required">*</span></label>
+              <input type="text" id="pejabat_nama" name="pejabat_nama" placeholder="Nama lengkap beserta gelar" required>
+            </div>
+
+            <div class="form-group">
+              <label for="pejabat_nip">NIP Pejabat <span class="required">*</span></label>
+              <input type="text" id="pejabat_nip" name="pejabat_nip" placeholder="Contoh: 198205122008011005" required>
+            </div>
+          </div>
+
+          <!-- Ringkasan Dokumen Siap Unduh -->
+          <div style="background: linear-gradient(135deg, #EEF4FC 0%, #E0EDFD 100%); border: 1px solid #BFDBFE; border-radius: var(--radius); padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="color: var(--primary); font-size: 1.15rem; margin-bottom: 0.25rem;">📄 Dokumen Siap Diekspor ke Microsoft Word (.docx)</h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem;">
+                Seluruh placeholder titik-titik dan tanda kuning (<span style="background: #FEF08A; padding: 0.1rem 0.4rem; border-radius: 4px; color: #854D0E; font-weight: 600;">yellow highlight</span>) akan digantikan dengan data di atas dan dihapus secara bersih.
+              </p>
+            </div>
+            <button type="button" class="btn btn-download" id="btn-final-download" style="font-size: 1rem; padding: 0.85rem 1.8rem;">
+              📥 Generate & Unduh Dokumen (.docx)
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </main>
+
+  <!-- ==========================================================================
+       STICKY BOTTOM ACTION BAR
+       ========================================================================== -->
+  <footer class="bottom-bar">
+    <div class="bottom-container">
+      <div class="bottom-left">
+        <button type="button" class="btn btn-secondary" id="btn-save-draft">
+          💾 Simpan Draf
+        </button>
+        <span id="draft-status" style="font-size: 0.78rem; color: var(--text-muted);">Tersimpan otomatis</span>
+      </div>
+      <div class="bottom-right">
+        <button type="button" class="btn btn-secondary" id="btn-prev" style="display: none;">
+          ⬅️ Kembali
+        </button>
+        <button type="button" class="btn btn-primary" id="btn-next">
+          Lanjut ➡️
+        </button>
+        <button type="button" class="btn btn-download" id="btn-quick-download">
+          📥 Unduh DOCX
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Pustaka Lokal & Skrip Aplikasi -->
+  <script src="libs/jszip.min.js"></script>
+  <script src="libs/FileSaver.min.js"></script>
+  <script src="template-data.js"></script>
+  <script src="sample-data.js"></script>
+  <script src="docx-engine.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
